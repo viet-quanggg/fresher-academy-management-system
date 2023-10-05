@@ -2,16 +2,18 @@ package com.backend.FAMS.entity.LearningObjective;
 
 import com.backend.FAMS.entity.Syllabus.SyllabusObjective;
 import com.backend.FAMS.entity.TrainingContent.TrainingContent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "tblLearningObjective")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class LearningObjective {
@@ -32,9 +34,13 @@ public class LearningObjective {
 
     // 1-n to SyllabusObjective
     @OneToMany(mappedBy = "learningObjective")
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<SyllabusObjective> syllabusObjectives;
 
     // 1-n to TrainingContent
     @OneToMany(mappedBy = "learningObjective")
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<TrainingContent> trainingContent;
 }

@@ -2,14 +2,15 @@ package com.backend.FAMS.entity.TrainingContent;
 
 import com.backend.FAMS.entity.LearningObjective.LearningObjective;
 import com.backend.FAMS.entity.TrainingUnit.TrainingUnit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "tblTrainingContent")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrainingContent {
@@ -34,11 +35,13 @@ public class TrainingContent {
     // n-1 to LearningObjective
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "learning_objective_code", nullable = false)
+    @JsonIgnore
     private LearningObjective learningObjective;
 
     // n-1 to TrainingUnit
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "unit_code",nullable = false)
+    @JsonIgnore
     private TrainingUnit trainingUnit;
 
 }

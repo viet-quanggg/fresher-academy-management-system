@@ -1,14 +1,16 @@
 package com.backend.FAMS.entity.Syllabus;
 
 import com.backend.FAMS.entity.LearningObjective.LearningObjective;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "tblSyllabusObjective")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SyllabusObjective {
@@ -21,11 +23,15 @@ public class SyllabusObjective {
     @ManyToOne
     @MapsId("topicCode")
     @JoinColumn(name = "topic_code", insertable = false, updatable = false)
+//    @JsonBackReference
+    @JsonIgnore
     private Syllabus syllabus;
 
     // n-1 to LearningObjective
     @ManyToOne
     @MapsId("objectiveCode")
     @JoinColumn(name = "objective_code", insertable = false, updatable = false)
+//    @JsonBackReference
+    @JsonIgnore
     private LearningObjective learningObjective;
 }

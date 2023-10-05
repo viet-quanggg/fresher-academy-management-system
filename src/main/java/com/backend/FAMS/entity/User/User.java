@@ -3,20 +3,24 @@ package com.backend.FAMS.entity.User;
 import com.backend.FAMS.entity.Class.ClassUser;
 import com.backend.FAMS.entity.Syllabus.Syllabus;
 import com.backend.FAMS.entity.TrainingProgram.TrainingProgram;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "tblUser")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements Serializable {
     @Id
     @Column(name = "user_id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,19 +61,28 @@ public class User {
     // --- relationship----
 
     // 1-n to TrainingProgram
+
     @OneToMany(mappedBy = "user")
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<TrainingProgram> trainingPrograms;
 
     // 1-n to ClassUser
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<ClassUser> classUsers;
 
     // 1-n to Syllabus
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<Syllabus> syllabusSet;
 
     // n-1 to UserPermission
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id", nullable = false)
+//    @JsonBackReference
+    @JsonIgnore
     private UserPermission userPermission;
 }

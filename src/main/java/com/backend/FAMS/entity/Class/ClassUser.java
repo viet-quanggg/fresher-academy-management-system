@@ -1,14 +1,15 @@
 package com.backend.FAMS.entity.Class;
 
 import com.backend.FAMS.entity.User.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "tblClassUser")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassUser {
@@ -25,12 +26,14 @@ public class ClassUser {
     @ManyToOne
     @MapsId("classId")
     @JoinColumn(name = "class_id", insertable = false, updatable = false)
+    @JsonIgnore
     private Class aClass;
 
     // n-1 to User
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
     private User user;
 
 }

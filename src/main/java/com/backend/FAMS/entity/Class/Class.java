@@ -1,17 +1,18 @@
 package com.backend.FAMS.entity.Class;
 
 import com.backend.FAMS.entity.TrainingProgram.TrainingProgram;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "tblClass")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Class {
@@ -62,9 +63,11 @@ public class Class {
     // n -1 to TrainingProgram
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "training_program_code", nullable = false)
+    @JsonIgnore
     private TrainingProgram trainingProgram;
 
     // 1-n to ClassUser
     @OneToMany(mappedBy = "aClass")
+    @JsonIgnore
     private Set<ClassUser> classUsers;
 }

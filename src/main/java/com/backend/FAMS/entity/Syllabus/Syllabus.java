@@ -4,20 +4,24 @@ import com.backend.FAMS.entity.LearningObjective.LearningObjective;
 import com.backend.FAMS.entity.TrainingProgram.TrainingProgramSyllabus;
 import com.backend.FAMS.entity.TrainingUnit.TrainingUnit;
 import com.backend.FAMS.entity.User.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "tblSyllabus")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Syllabus {
+public class Syllabus implements Serializable {
     @Id
     @Column(name = "topic_code", nullable = false, unique = true)
     private String topicCode;
@@ -66,20 +70,28 @@ public class Syllabus {
 
     // tao quan he 1-n to SyllabusObjective
     @OneToMany(mappedBy = "syllabus")
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<SyllabusObjective> syllabusObjectives;
 
     // 1-n to TrainingUnit
     @OneToMany(mappedBy = "syllabus")
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<TrainingUnit> trainingUnits;
 
     //  1-n to TrainingProgramSyllabus
     @OneToMany(mappedBy = "syllabus")
+//    @JsonManagedReference
+    @JsonIgnore
     private Set<TrainingProgramSyllabus> trainingProgramSyllabusSet;
 
     // n-1 to User
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "userId", insertable = false, updatable = false)
+//    @JsonBackReference
+    @JsonIgnore
     private User user;
 
 

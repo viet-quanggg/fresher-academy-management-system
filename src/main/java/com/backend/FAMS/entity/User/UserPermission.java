@@ -1,16 +1,17 @@
 package com.backend.FAMS.entity.User;
 
 import com.backend.FAMS.entity.Syllabus.Syllabus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "tblUserPermission")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPermission {
@@ -45,5 +46,6 @@ public class UserPermission {
 
     // 1-n to User
     @OneToMany(mappedBy = "userPermission")
+    @JsonIgnore
     private Set<User> users;
 }
